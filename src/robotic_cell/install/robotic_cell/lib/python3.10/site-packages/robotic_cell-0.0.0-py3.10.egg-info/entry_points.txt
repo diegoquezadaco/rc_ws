@@ -1,3 +1,0 @@
-[console_scripts]
-trajectory_pub = robotic_cell.trajectory_pub:main
-
