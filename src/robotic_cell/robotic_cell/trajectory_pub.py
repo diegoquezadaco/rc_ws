@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import JointState
 import time
+import numpy as np
 
 class TrajectoryPublisher(Node):
     def __init__(self):
@@ -24,22 +25,41 @@ class TrajectoryPublisher(Node):
                     -0.1269193581254857, -1.4938572536138504, -3.279542059666135917]),
             (85, [0.9233068447773152, -0.71934055297091893, -1.1608655227106162,
                     -0.4955318732328511, -1.5417809184135878, -3.4098725647896004]),
-            (100, [ 1.9233068447773152, -0.91934055297091893, -0.8608655227106162,
-                    -0.4955318732328511, -1.5417809184135878, -3.09098725647896004
-            ])
+            (100, [1.9233068447773152, -0.91934055297091893, -0.8608655227106162,
+                    -0.4955318732328511, -1.5417809184135878, -3.09098725647896004])
         ]
+
         self.current_idx = 0
 
     def timer_callback(self):
         now = time.time() - self.start_time
-        if self.current_idx < len(self.points) and now >= self.points[self.current_idx][0]:
-            msg = JointState()
-            msg.name = ['joint1','joint2','joint3','joint4','joint5','joint6']
-            msg.position = self.points[self.current_idx][1]
-            msg.velocity = [0.0]*6
-            self.pub.publish(msg)
-            self.get_logger().info(f"Sent point {self.current_idx}")
+
+        # stop after last point
+        if self.current_idx >= len(self.points) - 1:
+            return
+
+        t0, p0 = self.points[self.current_idx]
+        t1, p1 = self.points[self.current_idx + 1]
+
+        if now < t0:
+            return  # wait until first point
+
+        if now >= t1:
+            # reached next point, move index forward
             self.current_idx += 1
+            return
+
+        # --- Linear interpolation ---
+        ratio = (now - t0) / (t1 - t0)
+        p0 = np.array(p0)
+        p1 = np.array(p1)
+        interp = (1 - ratio) * p0 + ratio * p1
+
+        msg = JointState()
+        msg.name = ['joint1','joint2','joint3','joint4','joint5','joint6']
+        msg.position = interp.tolist()
+        msg.velocity = [0.0]*6
+        self.pub.publish(msg)
 
 def main(args=None):
     rclpy.init(args=args)
