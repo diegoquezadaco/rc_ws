@@ -11,21 +11,21 @@ class RealToSimBridge(Node):
         super().__init__('real_to_sim_bridge')
 
         # Publisher to digital twin
-        self.sim_pub = self.create_publisher(JointState, '/uf850_sim/joint_command', 10)
-        #self.sim_pub = self.create_publisher(JointState, '/xarm6_sim/joint_command', 10)
+        #self.sim_pub = self.create_publisher(JointState, '/uf850_sim/joint_command', 10)
+        self.sim_pub = self.create_publisher(JointState, '/xarm6_sim/joint_command', 10)
         # Subscriber to real robot state
-        self.real_sub = self.create_subscription(
-            JointTrajectoryControllerState,
-            '/uf850_traj_controller/state',
-            self.real_state_callback,
-            10
-        )
         # self.real_sub = self.create_subscription(
         #     JointTrajectoryControllerState,
-        #     '/xarm6_traj_controller/state',
+        #     '/uf850_traj_controller/state',
         #     self.real_state_callback,
         #     10
         # )
+        self.real_sub = self.create_subscription(
+            JointTrajectoryControllerState,
+            '/xarm6_traj_controller/state',
+            self.real_state_callback,
+            10
+        )
 
 
         self.joint_names = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
