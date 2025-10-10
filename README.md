@@ -13,6 +13,15 @@
 ## 2. Computer Setup
 - Turn On the PC
 - Select Ubuntu as OS
+- Select acis user and eneter the password
 - Open Isaac Sim:
-  - Open Files
-  - Go to: 
+  - Open a new terminal (CTRL + Alt + T)
+  - type: /home/acis/isaacsim/_build/linux-x86_64/release/isaac-sim.sh
+  - Click enter and let it run
+  - It is usual that a pop-up window of "Isaac Sim is not responding" appear, if so, let it there, or click "Wait", as many times as needed
+- Open the robotic cell scene:
+  - At the left top of the Isaac Sim window, place the cursor on File
+  - Go to Open Recent
+  - Click on file:/home/acis/Downloads/diego/dt-isaac-sim/new-robotic-cell-dq.usd
+  - In the pop-up window, Click on "Don't save"
+- You have now successfully opened the DT of the Robotic Cell!
