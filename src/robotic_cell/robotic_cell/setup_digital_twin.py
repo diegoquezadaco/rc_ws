@@ -10,42 +10,50 @@ class RealToSimBridge(Node):
     def __init__(self):
         super().__init__('real_to_sim_bridge')
 
-        # Publisher to digital twin
-        #self.sim_pub = self.create_publisher(JointState, '/uf850_sim/joint_command', 10)
-        self.sim_pub = self.create_publisher(JointState, '/xarm6_sim/joint_command', 10)
-        # Subscriber to real robot state
-        # self.real_sub = self.create_subscription(
-        #     JointTrajectoryControllerState,
-        #     '/uf850_traj_controller/state',
-        #     self.real_state_callback,
-        #     10
-        # )
-        self.real_sub = self.create_subscription(
+        # Publishers to digital twin
+        self.uf850_sim_pub = self.create_publisher(JointState, '/uf850_sim/joint_command', 10)
+        self.xarm6_sim_pub = self.create_publisher(JointState, '/xarm6_sim/joint_command', 10)
+
+        # Subscribers to real robot states
+        self.uf850_real_sub = self.create_subscription(
+            JointTrajectoryControllerState,
+            '/uf850_traj_controller/state',
+            self.uf850_real_state_callback,
+            10
+        )
+        self.xarm6_real_sub = self.create_subscription(
             JointTrajectoryControllerState,
             '/xarm6_traj_controller/state',
-            self.real_state_callback,
+            self.xarm6_real_state_callback,
             10
         )
 
+        self.uf850_joint_names = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
+        self.xarm6_joint_names = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
 
-        self.joint_names = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
-        self.sim_last_state = None
         self.get_logger().info('✅ Real-to-Sim bridge node started')
 
-    def real_state_callback(self, msg: JointTrajectoryControllerState):
-        """Mirror the real robot’s joint positions into the simulation."""
+    def uf850_real_state_callback(self, msg: JointTrajectoryControllerState):
+        """Mirror the UF850 real robot’s joint positions into the simulation."""
         sim_msg = JointState()
-        sim_msg.name = self.joint_names
+        sim_msg.name = self.uf850_joint_names
         sim_msg.position = list(msg.actual.positions)
         sim_msg.velocity = list(msg.actual.velocities)
         sim_msg.effort = list(msg.actual.effort)
 
-        self.sim_pub.publish(sim_msg)
-        self.get_logger().info(f'Mirrored real → sim: {sim_msg.position}')
+        self.uf850_sim_pub.publish(sim_msg)
+        self.get_logger().info(f'Mirrored UF850 real → sim: {sim_msg.position}')
 
-    def sim_state_callback(self, msg: JointState):
-        """Optionally track simulation state for later use (e.g., feedback)."""
-        self.sim_last_state = msg.position
+    def xarm6_real_state_callback(self, msg: JointTrajectoryControllerState):
+        """Mirror the xArm6 real robot’s joint positions into the simulation."""
+        sim_msg = JointState()
+        sim_msg.name = self.xarm6_joint_names
+        sim_msg.position = list(msg.actual.positions)
+        sim_msg.velocity = list(msg.actual.velocities)
+        sim_msg.effort = list(msg.actual.effort)
+
+        self.xarm6_sim_pub.publish(sim_msg)
+        self.get_logger().info(f'Mirrored xArm6 real → sim: {sim_msg.position}')
 
 
 def main(args=None):
