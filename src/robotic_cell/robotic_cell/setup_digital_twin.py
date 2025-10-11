@@ -17,13 +17,13 @@ class RealToSimBridge(Node):
         # Subscribers to real robot states
         self.uf850_real_sub = self.create_subscription(
             JointTrajectoryControllerState,
-            '/uf850_traj_controller/state',
+            '/L_uf850_traj_controller/state',
             self.uf850_real_state_callback,
             10
         )
         self.xarm6_real_sub = self.create_subscription(
             JointTrajectoryControllerState,
-            '/xarm6_traj_controller/state',
+            '/R_xarm6_traj_controller/state',
             self.xarm6_real_state_callback,
             10
         )
