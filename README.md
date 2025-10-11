@@ -7,7 +7,10 @@
 - Switch or Access point
 ## 1. Physical Setup
 - Verify that both AC Control boxes of the robots are plugged
-- Turn on the switches in both AC control boxes
+- Turn on the switches in both AC control boxes so they look like this:
+<img width="493" height="254" alt="image" src="https://github.com/user-attachments/assets/92c21ece-12df-430d-88c2-4ad7d605c24d" />
+<img width="432" height="453" alt="image" src="https://github.com/user-attachments/assets/b11c1d49-e96f-45ef-95ee-a4a918483abe" />
+
 - Release the Emergency Stop button (Red one) on both AC control Boxes
 - Verify that the LAN cables between the AC Control Boxes and the Access Point are connected
 - Verify that the LAN cable between the Access Point 
@@ -17,13 +20,23 @@
 - Select acis user and eneter the password
 - Open Isaac Sim:
   - Open a new terminal (CTRL + Alt + T)
-  - type: /home/acis/isaacsim/_build/linux-x86_64/release/isaac-sim.sh
+  - Copy and paste: /home/acis/isaacsim/_build/linux-x86_64/release/isaac-sim.sh
   - Click enter and let it run
-  - It is usual that a pop-up window of "Isaac Sim is not responding" appear, if so, let it there, or click "Wait", as many times as needed
+  - A Pop up Window like this should appear: 
+<img width="443" height="224" alt="image" src="https://github.com/user-attachments/assets/b30262b0-fdf5-4344-88b8-f5197decbfb7" />
+
+  - It is usual that a pop-up window of "Isaac Sim is not responding" appear, if so, Wait, or click "Wait"
+<img width="444" height="166" alt="image" src="https://github.com/user-attachments/assets/841c769a-8448-46b9-a9cd-07a2575b23e3" />
+
+  - If you see something like this, Isaac Sim is completely loaded:
+<img width="444" height="166" alt="image" src="https://github.com/user-attachments/assets/a2bad767-fd72-4fe6-8492-a589325ce773" />
+
 - Open the robotic cell scene:
-  - At the left top of the Isaac Sim window, place the cursor on File
+  - At the left top of the Isaac Sim window, Click on File
   - Go to Open Recent
   - Click on file:/home/acis/Downloads/diego/dt-isaac-sim/new-robotic-cell-dq.usd
+<img width="532" height="216" alt="image" src="https://github.com/user-attachments/assets/1bf5b162-51ed-48c3-acfa-8c3d183ac1ad" />
+
   - In the pop-up window, Click on "Don't save"
   - You have now successfully opened the DT of the Robotic Cell!
 - Enable ROS Topics for simulated robots
