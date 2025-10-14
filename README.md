@@ -21,7 +21,7 @@
 - Open Isaac Sim:
   - Open a new terminal (CTRL + Alt + T)
   - Copy and paste:
-    ```python
+    ```bash
     /home/acis/isaacsim/_build/linux-x86_64/release/isaac-sim.sh
   - Click enter and let it run
   - A Pop up Window like this should appear: 
@@ -59,7 +59,7 @@
 ### Enable ROS Topics for real robots
   - Open a new terminal (CTRL + Alt + T)
   - Copy and paste the following commands:
-    ```python
+    ```bash
     cd scan_ws
     source /opt/ros/humble/setup.bash
     source install/setup.bash
@@ -94,7 +94,7 @@
 ### Set up the Digital Twin 
  - Open a new terminal (CTRL + Alt + T)
   - Copy and paste the following commands:
-    ```python
+    ```bash
     cd robotic_cell_files/rc_ws
     source /opt/ros/humble/setup.bash
     colcon build
