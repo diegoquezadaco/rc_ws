@@ -1,7 +1,11 @@
 # SETUP DIGITAL TWIN ROBOTIC CELL
 **PLEASE MAKE SURE TO READ ALL THE SECTION CONTENT BEFORE IMPLEMENTING ANYTHING**
 # Table of contents
-[2.5 Set up the Digital Twin](#25-set-up-the-digital-twin).
+[0. Requirements](#0-requirements).
+[1. Physical Setup](#1-physical-setup).
+[2. Computer Setup](#2-computer-setup).
+  [2.5 Set up the Digital Twin](#25-set-up-the-digital-twin).
+
 
 ## 0. Requirements
 - Computer in the Robotic Cell (AMD® Ryzen 9 5900x 12-core processor × 24 with TITAN RTX)
