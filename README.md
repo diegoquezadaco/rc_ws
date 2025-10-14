@@ -20,7 +20,9 @@
 - Select acis user and eneter the password
 - Open Isaac Sim:
   - Open a new terminal (CTRL + Alt + T)
-  - Copy and paste: /home/acis/isaacsim/_build/linux-x86_64/release/isaac-sim.sh
+  - Copy and paste:
+    ```python
+    /home/acis/isaacsim/_build/linux-x86_64/release/isaac-sim.sh
   - Click enter and let it run
   - A Pop up Window like this should appear: 
 <img width="443" height="224" alt="image" src="https://github.com/user-attachments/assets/b30262b0-fdf5-4344-88b8-f5197decbfb7" />
