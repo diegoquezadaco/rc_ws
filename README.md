@@ -1,5 +1,8 @@
 # SETUP DIGITAL TWIN ROBOTIC CELL
 **PLEASE MAKE SURE TO READ ALL THE SECTION CONTENT BEFORE IMPLEMENTING ANYTHING**
+# Table of contents
+Link to the sample section: [2.5 Set up the Digital Twin](#2.5-set-up-the-digital-twin).
+
 ## 0. Requirements
 - Computer in the Robotic Cell (AMD® Ryzen 9 5900x 12-core processor × 24 with TITAN RTX)
 - Robotic Arm UF850 with XArm gripper
@@ -16,10 +19,8 @@
 - Verify that the LAN cables between the AC Control Boxes and the Access Point are connected
 - Verify that the LAN cable between the Access Point 
 ## 2. Computer Setup
-- Turn On the PC
-- Select Ubuntu as OS
-- Select acis user and eneter the password
-- Open Isaac Sim:
+
+### 2.1 Open Isaac Sim:
   - Open a new terminal (CTRL + Alt + T)
   - Copy and paste:
       ```bash
@@ -34,7 +35,7 @@
   - If you see something like this, Isaac Sim is completely loaded:
 <img width="444" height="166" alt="image" src="https://github.com/user-attachments/assets/a2bad767-fd72-4fe6-8492-a589325ce773" />
 
-### Open the robotic cell scene:
+### 2.2 Open the robotic cell scene:
   - At the left top of the Isaac Sim window, Click on File
   - Go to Open Recent
   - Click on file:/home/acis/Downloads/diego/dt-isaac-sim/new-robotic-cell-dq.usd
@@ -46,7 +47,7 @@
   - You have now successfully opened the DT of the Robotic Cell!
 <img width="533" height="298" alt="image" src="https://github.com/user-attachments/assets/46af71c9-2cb2-43d1-a870-f1b3da0c026d" />
 
-### Enable ROS Topics for simulated robots
+### 2.3 Enable ROS Topics for simulated robots
   - Press space bar
 <img width="173" height="399" alt="image" src="https://github.com/user-attachments/assets/01a02439-42bd-4c29-b903-951806547218" />
 
@@ -60,7 +61,7 @@
   - /xarm6_sim/joint_command
   - /xarm6_sim/joint_states
 - The joint_command topic is the topic that receives the commands, and the joint_states is the topic that publishes the states
-### Enable ROS Topics for real robots
+### 2.4 Enable ROS Topics for real robots
   - Open a new terminal (CTRL + Alt + T)
   - Copy and paste the following commands:
     ```bash
@@ -98,7 +99,7 @@
     - /R_xarm6_traj_controller/joint_trajectory
     - /R_xarm6_traj_controller/state
     - /R_xarm6_traj_controller/transition_event
-### Set up the Digital Twin 
+### 2.5 Set up the Digital Twin
  - Open a new terminal (CTRL + Alt + T)
   - Copy and paste the following commands:
     ```bash
@@ -112,7 +113,16 @@
 
   - You should see the Simulated robots in Isaac Sim, mimic the pose of the real ones
 
-## 3. Computer Setup
+## 3. Interacting with the Digital Twin in Isaac Sim
+
+### 3.1 Interacting with the Digital Twin in Isaac Sim
+
+### 3.2 Sending Commands to the Real Robot Using RVIZ interface
+
+### 3.3 Sending commands to the Real Robot using command line 
+
+
+
 
     
 
