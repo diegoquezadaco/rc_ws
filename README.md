@@ -120,13 +120,21 @@
 
   - You should see the Simulated robots in Isaac Sim, mimic the pose of the real ones
 
-## 3. Interacting with the Digital Twin in Isaac Sim
+## 3. Interacting with the Digital Twin
 
 ### 3.1 Interacting with the Digital Twin in Isaac Sim
+
 
 ### 3.2 Sending Commands to the Real Robot Using RVIZ interface
 
 ### 3.3 Sending commands to the Real Robot using command line 
+
+## 4. Logging off
+### 4.1 Safely closing Isaac Sim
+- Stop the simulation by clicking stop
+<img width="227" height="370" alt="image" src="https://github.com/user-attachments/assets/46490e3c-3663-42fa-93f6-04e6c5b1b369" />
+
+
 
 
 
