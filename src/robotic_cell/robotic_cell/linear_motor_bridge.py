@@ -25,7 +25,7 @@ class LinearMotorPublisher(Node):
         code = self.arm.set_linear_motor_enable(True)
         self.get_logger().info(f'Linear motor enable, code={code}')
 
-        code = self.arm.set_linear_motor_speed(400)
+        code = self.arm.set_linear_motor_speed(100)
         self.get_logger().info(f'Linear motor speed set, code={code}')
 
         self.arm.set_linear_motor_pos(0, wait=True)
