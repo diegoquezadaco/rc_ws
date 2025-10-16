@@ -23,6 +23,7 @@ setup(
             'trajectory_pub = robotic_cell.trajectory_pub:main',
             'setup_digital_twin = robotic_cell.setup_digital_twin:main',
             'linear_motor_bridge = robotic_cell.linear_motor_bridge:main',
+            'isaac_bridge_lm = robotic_cell.isaac_bridge_lm:main',
         ],
     },
 )
