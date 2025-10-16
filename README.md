@@ -114,7 +114,8 @@
     source /opt/ros/humble/setup.bash
     colcon build
     source install/setup.bash
-    ros2 run robotic_cell setup_digital_twin
+    ros2 launch robotic_cell setup_digital_twin_robotic_cell.launch.py
+
   - In that terminal, you should see something like this that updates really fast:
 <img width="1204" height="378" alt="image" src="https://github.com/user-attachments/assets/978113c5-3e08-4ac7-9f0b-d3458e748877" />
 
