@@ -82,13 +82,13 @@ class RealtimeCompareNode(Node):
         # Subscribers
         self.create_subscription(
             JointTrajectoryControllerState,
-            '/L_uf850_traj_controller/state',
+            '/R_xarm6_traj_controller/state',
             self.real_callback,
             10
         )
         self.create_subscription(
             JointState,
-            'uf850_sim/joint_states',
+            'xarm6_sim/joint_states',
             self.sim_callback,
             10
         )
@@ -148,7 +148,7 @@ class RealtimeCompareNode(Node):
             ln_stripped = ln
             if ln.startswith('r_'):
                 ln_stripped = ln[2:]
-            elif ln.startswith('l'):
+            elif ln.startswith('r'):
                 # maybe 'R_joint1' -> 'r_joint1' handled above, but keep fallback
                 ln_stripped = ln[1:] if len(ln) > 1 and ln[1] == '_' else ln
             # also replace '-' or '.' with '_'
@@ -168,7 +168,7 @@ class RealtimeCompareNode(Node):
                 # try patterns like 'r_joint1' or 'rjoint1' for real
                 candidates = []
                 if real:
-                    candidates = [f"l_{t}", f"l{t}"]
+                    candidates = [f"r_{t}", f"r{t}"]
                 else:
                     candidates = [t]
                 found = False
