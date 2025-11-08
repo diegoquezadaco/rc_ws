@@ -18,7 +18,7 @@ setup(
     maintainer_email='quezadacoloradodiego@gmail.com',
     description='Digital Twin setup for robotic cell',
     license='Apache License 2.0',
-    tests_require=['pytest'],
+    #setup_requires=['setuptools'],
     entry_points={
         'console_scripts': [
             'trajectory_pub = robotic_cell.trajectory_pub:main',
@@ -27,6 +27,7 @@ setup(
             'isaac_bridge_lm = robotic_cell.isaac_bridge_lm:main',
             'xarm_gripper_bridge = robotic_cell.xarm_gripper_bridge:main',
             'xarm_linear_motor_rosbridge = robotic_cell.xarm_linear_motor_rosbridge:main',
+            'realtime_compare_plot = robotic_cell.realtime_compare_plot:main',
         ],
     },
 )
