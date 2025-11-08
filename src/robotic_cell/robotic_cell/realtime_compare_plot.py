@@ -39,9 +39,31 @@ from collections import deque
 
 # Parameters
 SAMPLE_HZ = 20
-DURATION_SEC = 45.0
+DURATION_SEC = 55.0
 WINDOW_WIDTH_PX = 900
 WINDOW_HEIGHT_PX = 500
+
+import csv
+from datetime import datetime
+import os
+
+# Create output directory and CSV file
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+output_dir = os.path.join(os.path.expanduser("."), "robotic_cell_logs")
+os.makedirs(output_dir, exist_ok=True)
+csv_path = os.path.join(output_dir, f"realtime_log_{timestamp}.csv")
+
+# Initialize CSV file with headers
+with open(csv_path, mode="w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow([
+    "Timestamp",
+    "Real_J1", "Real_J2", "Real_J3", "Real_J4", "Real_J5", "Real_J6",
+    "Sim_J1", "Sim_J2", "Sim_J3", "Sim_J4", "Sim_J5", "Sim_J6",
+    "RMSE_per_joint", "Avg_RMSE", "TimeDelay_ms"
+])
+
+
 
 def safe_mean(x):
     return float(np.mean(x)) if len(x) > 0 else 0.0
@@ -60,13 +82,13 @@ class RealtimeCompareNode(Node):
         # Subscribers
         self.create_subscription(
             JointTrajectoryControllerState,
-            '/R_xarm6_traj_controller/state',
+            '/L_uf850_traj_controller/state',
             self.real_callback,
             10
         )
         self.create_subscription(
             JointState,
-            'xarm6_sim/joint_states',
+            'uf850_sim/joint_states',
             self.sim_callback,
             10
         )
@@ -126,7 +148,7 @@ class RealtimeCompareNode(Node):
             ln_stripped = ln
             if ln.startswith('r_'):
                 ln_stripped = ln[2:]
-            elif ln.startswith('r'):
+            elif ln.startswith('l'):
                 # maybe 'R_joint1' -> 'r_joint1' handled above, but keep fallback
                 ln_stripped = ln[1:] if len(ln) > 1 and ln[1] == '_' else ln
             # also replace '-' or '.' with '_'
@@ -146,7 +168,7 @@ class RealtimeCompareNode(Node):
                 # try patterns like 'r_joint1' or 'rjoint1' for real
                 candidates = []
                 if real:
-                    candidates = [f"r_{t}", f"r{t}"]
+                    candidates = [f"l_{t}", f"l{t}"]
                 else:
                     candidates = [t]
                 found = False
@@ -201,6 +223,32 @@ class RealtimeCompareNode(Node):
             diff = real_vals - sim_vals
             rmse = float(np.sqrt(np.mean(diff ** 2)))
 
+            # Compute RMSE per joint
+            rmse_per_joint = np.sqrt((real_vals - sim_vals) ** 2)
+            avg_rmse = float(np.mean(rmse_per_joint))
+
+            # Estimate time delay (ms)
+            real_stamp = self.latest_real.get('stamp')
+            sim_stamp = self.latest_sim.get('stamp')
+            if real_stamp and sim_stamp:
+                delay_ms = (real_stamp.nanoseconds - sim_stamp.nanoseconds) / 1e6
+            else:
+                delay_ms = 0.0
+
+            # Log data to CSV
+            with open(csv_path, mode="a", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow([
+                    datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    *real_vals.tolist(),
+                    *sim_vals.tolist(),
+                    *rmse_per_joint.tolist(),
+                    avg_rmse,
+                    delay_ms
+                ])
+
+
+
             # append
             self.times.append(t)
             self.real_means.append(real_mean)
@@ -220,6 +268,21 @@ class RealtimeCompareNode(Node):
         # give a bit to show final frame
         time.sleep(1.0)
         cv2.destroyAllWindows()
+        # Save final chart and summary
+        final_chart_path = os.path.join(output_dir, f"final_plot_{timestamp}.png")
+        fig, ax = plt.subplots(figsize=(WINDOW_WIDTH_PX/100, WINDOW_HEIGHT_PX/100), dpi=100)
+        ax.plot(self.times, self.real_means, label='Real mean(1..6)')
+        ax.plot(self.times, self.sim_means, label='Sim mean(1..6)')
+        ax.set_xlabel('time (s)')
+        ax.set_ylabel('mean joint position (rad)')
+        ax.set_title('Final Summary: Real vs Sim mean joint positions')
+        ax.legend(loc='upper right')
+        ax.grid(True)
+        plt.tight_layout()
+        plt.savefig(final_chart_path, dpi=300)
+        plt.close(fig)
+        print(f"[INFO] Final chart saved to: {final_chart_path}")
+        print(f"[INFO] CSV log saved to: {csv_path}")
         # shutdown ROS
         rclpy.shutdown()
 
