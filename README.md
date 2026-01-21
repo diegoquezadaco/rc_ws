@@ -68,7 +68,24 @@
   - /xarm6_sim/joint_command
   - /xarm6_sim/joint_states
 - The joint_command topic is the topic that receives the commands, and the joint_states is the topic that publishes the states
-### 2.4 Enable ROS Topics for real robots
+
+### 2.5 Set up the Digital Twin
+ - Open a new terminal (CTRL + Alt + T)
+  - Copy and paste the following commands:
+    ```bash
+    cd robotic_cell_files/rc_ws
+    source /opt/ros/humble/setup.bash
+    colcon build
+    source install/setup.bash
+    ros2 launch robotic_cell setup_digital_twin_robotic_cell.launch.py
+
+  - In that terminal, you should see something like this that updates really fast:
+<img width="1204" height="378" alt="image" src="https://github.com/user-attachments/assets/978113c5-3e08-4ac7-9f0b-d3458e748877" />
+
+  - You should see the Simulated robots in Isaac Sim, they will start in default poses
+  - Please wait until you see the OpenCV window with 3 trackbars that controls the 2 grippers and the linear motor
+
+### 2.5 Enable ROS Topics for real robots
   - Open a new terminal (CTRL + Alt + T)
   - Copy and paste the following commands:
     ```bash
@@ -106,20 +123,6 @@
     - /R_xarm6_traj_controller/joint_trajectory
     - /R_xarm6_traj_controller/state
     - /R_xarm6_traj_controller/transition_event
-### 2.5 Set up the Digital Twin
- - Open a new terminal (CTRL + Alt + T)
-  - Copy and paste the following commands:
-    ```bash
-    cd robotic_cell_files/rc_ws
-    source /opt/ros/humble/setup.bash
-    colcon build
-    source install/setup.bash
-    ros2 launch robotic_cell setup_digital_twin_robotic_cell.launch.py
-
-  - In that terminal, you should see something like this that updates really fast:
-<img width="1204" height="378" alt="image" src="https://github.com/user-attachments/assets/978113c5-3e08-4ac7-9f0b-d3458e748877" />
-
-  - You should see the Simulated robots in Isaac Sim, mimic the pose of the real ones
 
 ## 3. Interacting with the Digital Twin
 
